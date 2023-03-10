@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = -1;
+        Application.targetFrameRate = 80;
         myRigidbody = GetComponent<Rigidbody>();
     }
     //-------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ public class CharacterMovement : MonoBehaviour
 
         change = Vector3.zero;
         KeyCode first_pressed;
-
+      
         
         first_pressed = GetFirstButton();
 
@@ -166,6 +166,7 @@ public class CharacterMovement : MonoBehaviour
 
             }
         }
+
         UpdateMovement();
 
 
