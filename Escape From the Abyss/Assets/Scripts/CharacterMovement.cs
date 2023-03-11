@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// pakeitimas test
 
 public class CharacterMovement : MonoBehaviour
 {
