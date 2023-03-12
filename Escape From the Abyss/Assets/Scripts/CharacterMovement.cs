@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
+	
     //private string fpsText;
     //public float deltaTime;
     //-------------------------------------------------------------------------------------------------
