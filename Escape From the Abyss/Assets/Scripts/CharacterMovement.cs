@@ -14,10 +14,14 @@ public class CharacterMovement : MonoBehaviour
     private Quaternion fixedQ = new Quaternion(0, 0, 0, 1);
     private Quaternion lastRotation;
     public Stack<KeyCode> listed_buttons;
+    public Vector3 forward, right;
     //--------------------------------------------------------------------------------------------------
     void Start()
     {
-        
+        forward = Camera.main.transform.forward;
+        forward.y = 0;
+        forward = Vector3.Normalize(forward);
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         myRigidbody = GetComponent<Rigidbody>();
     }
     void FixedUpdate()
@@ -31,35 +35,28 @@ public class CharacterMovement : MonoBehaviour
         {
             myRigidbody.transform.rotation = lastRotation;
         }    
-  
-        CalculateDirection();
-        Rotate();
+
         GetInput();
         UpdateMovement();
     }
-    void CalculateDirection()
-    {
-        angle = Mathf.Atan2(change.x, change.z);
-        angle *= Mathf.Rad2Deg;
-    }
 
-    void Rotate()
-    {
-        targetRotation = Quaternion.Euler(0, angle, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-    }
+
     void UpdateMovement()
     {
         if (change != Vector3.zero)
         {
-            if (Mathf.Abs(change.x) == 1 && Mathf.Abs(change.z) == 1) // eina istrizai
-            {
-                change *= 0.707f;
-            }
+
             playerAnim.SetBool("walking", true);
-            myRigidbody.MovePosition(myRigidbody.position + change * speed * Time.fixedDeltaTime);
+            change = Vector3.ClampMagnitude(change, 1f);
+            Vector3 rightMovement = right * speed * Time.deltaTime * change.z;
+            Vector3 upMovement = forward * speed * Time.deltaTime * change.x;
+
+            Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
+
+            transform.forward = Vector3.Lerp(transform.forward, heading, 0.1f);
+            myRigidbody.position += rightMovement + upMovement;
         }
-       
+
     }
     void GetInput()
     {
@@ -69,19 +66,19 @@ public class CharacterMovement : MonoBehaviour
         playerAnim.SetBool("walking", false);
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            change.z = 1;
+            change.z = -1;
             
             
         }
             
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            if (change.z == 1)
+            if (change.z == -1)
             {
                 change = Vector3.zero;
                 return;
             }
-            change.z = -1;
+            change.z = 1;
             
            
         }
