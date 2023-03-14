@@ -1,2 +1,3 @@
-# Escape-From-the-Abyss
-CIA YRA NAUJAUSIA VERSIJA!
+# Escape From the Abyss
+
+University Project
