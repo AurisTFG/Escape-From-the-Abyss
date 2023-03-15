@@ -9,12 +9,11 @@ public class CharacterMovement : MonoBehaviour
     private float angle;
     public float speed;
     public float turnSpeed;
-    public Vector3 change;
+    private Vector3 change, forward, right;
     private Quaternion targetRotation;
     private Quaternion fixedQ = new Quaternion(0, 0, 0, 1);
     private Quaternion lastRotation;
     public Stack<KeyCode> listed_buttons;
-    public Vector3 forward, right;
     //--------------------------------------------------------------------------------------------------
     void Start()
     {
