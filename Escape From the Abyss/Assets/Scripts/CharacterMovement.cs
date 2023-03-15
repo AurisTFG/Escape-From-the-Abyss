@@ -1,146 +1,93 @@
 using UnityEngine;
-using System.Collections.Generic;
+
 public class CharacterMovement : MonoBehaviour
 {
-    //--------------------------------------------------------------------------------------------------
-    public Animator playerAnim; 
+    public Animator playerAnim;
     private Rigidbody myRigidbody;
-    //--------------------------------------------------------------------------------------------------
-    private float angle;
-    public float speed;
-    public float turnSpeed;
-    private Vector3 change, forward, right;
+
+    public float walkingSpeed;
+    private Vector3 walkingChange;
+    private Vector3 forward, right;
+    private Vector3 heading;
+
+    public float rotationSpeed;
+    private float rotationAngle;
     private Quaternion targetRotation;
-    private Quaternion fixedQ = new Quaternion(0, 0, 0, 1);
-    private Quaternion lastRotation;
-    public Stack<KeyCode> listed_buttons;
-    //--------------------------------------------------------------------------------------------------
+
     void Start()
     {
+        myRigidbody = GetComponent<Rigidbody>();
+
         forward = Camera.main.transform.forward;
         forward.y = 0;
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
-        myRigidbody = GetComponent<Rigidbody>();
+
+        walkingSpeed = 4;
+        rotationSpeed = 5;
     }
     void FixedUpdate()
     {
-
-        if (playerAnim.GetBool("walking"))
-        {
-            lastRotation = myRigidbody.transform.rotation;
-        }
-        else
-        {
-            myRigidbody.transform.rotation = lastRotation;
-        }    
-
         GetInput();
         UpdateMovement();
+        UpdateRotation();
     }
+    void UpdateRotation()
+    {
+        rotationAngle = Mathf.Atan2(heading.x, heading.z);
+        rotationAngle *= Mathf.Rad2Deg;
 
-
+        targetRotation = Quaternion.Euler(0, rotationAngle, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+    }
     void UpdateMovement()
     {
-        if (change != Vector3.zero)
+        if (walkingChange != Vector3.zero)
         {
 
             playerAnim.SetBool("walking", true);
-            change = Vector3.ClampMagnitude(change, 1f);
-            Vector3 rightMovement = right * speed * Time.deltaTime * change.z;
-            Vector3 upMovement = forward * speed * Time.deltaTime * change.x;
+            walkingChange = Vector3.ClampMagnitude(walkingChange, 1f);
+            Vector3 rightMovement = right * walkingSpeed * Time.fixedDeltaTime * walkingChange.z;
+            Vector3 upMovement = forward * walkingSpeed * Time.fixedDeltaTime * walkingChange.x;
 
-            Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
+            heading = Vector3.Normalize(rightMovement + upMovement);
 
-            transform.forward = Vector3.Lerp(transform.forward, heading, 0.1f);
             myRigidbody.position += rightMovement + upMovement;
         }
 
     }
     void GetInput()
     {
-
-
-        change = Vector3.zero;
+        walkingChange = Vector3.zero;
         playerAnim.SetBool("walking", false);
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            change.z = -1;
-            
-            
+            walkingChange.z = -1;
         }
-            
+
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            if (change.z == -1)
+            if (walkingChange.z == -1)
             {
-                change = Vector3.zero;
+                walkingChange = Vector3.zero;
                 return;
             }
-            change.z = 1;
-            
-           
+            walkingChange.z = 1;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            change.x = -1;
-           
-            
+            walkingChange.x = -1;
         }
 
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-           
-            if (change.x == -1)
+            if (walkingChange.x == -1)
             {
-                change = Vector3.zero;
+                walkingChange = Vector3.zero;
                 return;
             }
-            change.x = 1;
-           
-            
+            walkingChange.x = 1;
         }
-        /*if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            listed_buttons.Push(KeyCode.UpArrow);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            listed_buttons.Push(KeyCode.DownArrow);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            listed_buttons.Push(KeyCode.RightArrow);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            listed_buttons.Push(KeyCode.LeftArrow);
-        }
-
-        
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            //listed_buttons.Peek();
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            //listed_buttons.Push(KeyCode.DownArrow);
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            if(listed_buttons.Peek() == KeyCode.RightArrow)
-            {
-                listed_buttons.Pop()
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-           // listed_buttons.Remove(KeyCode.LeftArrow);
-        }*/
-
     }
-    
-
-
 }
