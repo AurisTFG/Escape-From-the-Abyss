@@ -89,5 +89,6 @@ public class CharacterMovement : MonoBehaviour
             }
             walkingChange.x = 1;
         }
+
     }
 }
