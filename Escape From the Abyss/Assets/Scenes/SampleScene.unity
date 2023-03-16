@@ -163,18 +163,18 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16938436}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.59, z: 0.8}
-  m_Center: {x: -0.16, y: 0.74, z: 0.6}
+  m_Size: {x: 1, y: 1.5900002, z: 0.6209035}
+  m_Center: {x: -0.15999997, y: 0.74, z: 0.31398702}
 --- !u!43 &63550684
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38638
+  m_Name: pb_Mesh23814
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4515,7 +4515,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38764
+  m_Name: pb_Mesh36904
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4780,7 +4780,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38692
+  m_Name: pb_Mesh23870
   serializedVersion: 10
   m_SubMeshes: []
   m_Shapes:
@@ -6758,8 +6758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 0}
-  speed: 0
-  turnSpeed: 0
+  walkingSpeed: 0
+  rotationSpeed: 0
 --- !u!1 &1702563339
 GameObject:
   m_ObjectHideFlags: 0
@@ -7218,8 +7218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 5866666020827666695}
-  speed: 4
-  turnSpeed: 20
+  walkingSpeed: 0
+  rotationSpeed: 0
 --- !u!54 &1804235214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8788,7 +8788,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38736
+  m_Name: pb_Mesh23916
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8973,3 +8973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513acd0d02d6ab9439980828c75b4596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageAfterTime: 0.3
+  Damage: 0
+  _attackArea: {fileID: 0}
