@@ -11,6 +11,12 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public float lookRadius = 10f;
 
+    public AudioClip[] hits;
+
+    private AudioSource audioSource;
+
+
+
     Transform target;
     NavMeshAgent agent;
 
@@ -19,6 +25,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         enemyAnim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -57,6 +64,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     {
         Debug.Log("IKIRTAU TAU"); //temp
         enemyAnim.SetTrigger("hit");
+        audioSource.Play();
         
     }
 }
