@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
-using static Codice.CM.Common.CmCallContext;
+//using static Codice.CM.Common.CmCallContext;
 
 namespace XEntity.InventoryItemSystem
 {
@@ -224,7 +224,10 @@ namespace XEntity.InventoryItemSystem
         //Finds the interaction settings asset in the editor. Returns null if none is found.
         public static InteractionSettings FindInteractionSettings() 
         {
-            InteractionSettings settings = null;
+            //return AssetDatabase.LoadAssetAtPath("Assets/Items/Interaction Settings.asset", typeof(InteractionSettings)) as InteractionSettings;
+            return Resources.Load<InteractionSettings>("Interaction Settings");;
+
+ /*           InteractionSettings settings = null;
 
             if (Application.isPlaying == false)
             {
@@ -232,6 +235,7 @@ namespace XEntity.InventoryItemSystem
                 if (settingsAssets?.Length > 0)
                 {
                     string assetPath = AssetDatabase.GUIDToAssetPath(settingsAssets[0]);
+                    Debug.Log(assetPath);
                     settings = AssetDatabase.LoadAssetAtPath(assetPath, typeof(InteractionSettings)) as InteractionSettings;
                 }
             }
@@ -245,7 +249,7 @@ namespace XEntity.InventoryItemSystem
                 settings = settingsAssets[0] as InteractionSettings;
             }
 
-            return settings;
+            return settings;*/
         }
     }
 }
