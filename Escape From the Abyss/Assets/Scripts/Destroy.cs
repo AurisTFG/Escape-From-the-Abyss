@@ -11,6 +11,8 @@ public class Destroy : MonoBehaviour
     float cubesPivotDistance;
     Vector3 cubesPivot;
 
+    public GameObject particleOnDestroy;
+
     public float explosionForce = 50f;
     public float explosionRadius = 4f;
     public float explosionUpward = 0.4f;
@@ -44,6 +46,14 @@ public class Destroy : MonoBehaviour
 
     public void explode()
     {
+
+        if(particleOnDestroy)
+        {
+            GameObject explosion = Instantiate(particleOnDestroy, transform.position, transform.rotation);
+
+            Destroy(explosion, 3);
+        }
+
         //make object disappear
         gameObject.SetActive(false);
 

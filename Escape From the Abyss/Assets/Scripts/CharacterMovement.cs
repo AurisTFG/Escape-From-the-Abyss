@@ -4,6 +4,9 @@ public class CharacterMovement : MonoBehaviour
 {
     public Animator playerAnim;
     private Rigidbody myRigidbody;
+    float[] pitchRanges = new float[]{ 0.95f, 1, 1.05f };
+
+    private AudioSource audioSource;
 
     public float walkingSpeed;
     private Vector3 walkingChange;
@@ -17,6 +20,7 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        audioSource = GetComponents<AudioSource>()[0];
 
         forward = Camera.main.transform.forward;
         forward.y = 0;
@@ -50,10 +54,24 @@ public class CharacterMovement : MonoBehaviour
             Vector3 rightMovement = right * walkingSpeed * Time.fixedDeltaTime * walkingChange.z;
             Vector3 upMovement = forward * walkingSpeed * Time.fixedDeltaTime * walkingChange.x;
 
+
             heading = Vector3.Normalize(rightMovement + upMovement);
 
             myRigidbody.position += rightMovement + upMovement;
+
+
+
+            if (!audioSource.isPlaying)
+            {
+                audioSource.pitch = pitchRanges[Random.Range(0, 3)];
+                audioSource.Play();
+            }
+
         }
+        else
+            audioSource.Stop();
+
+
 
     }
     void GetInput()
