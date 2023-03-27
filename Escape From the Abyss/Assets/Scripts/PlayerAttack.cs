@@ -14,10 +14,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private AttackArea _attackArea;
 
+    private AudioSource audioSource;
+    public AudioClip[] swordswings;
+
     // Start is called before the first frame update
     void Start()
     {
         m_Animator = gameObject.GetComponent<Animator>();
+        audioSource = GetComponents<AudioSource>()[1];
     }
 
     // Update is called once per frame
@@ -27,10 +31,10 @@ public class PlayerAttack : MonoBehaviour
         {
             m_Animator.ResetTrigger("SimpleAttack");
             m_Animator.SetBool("IsAttacking", true);
-
             m_Animator.SetTrigger("SimpleAttack");
 
-
+            audioSource.clip = swordswings[0];
+            audioSource.Play();
 
             StartCoroutine("Hit", false);
         }
