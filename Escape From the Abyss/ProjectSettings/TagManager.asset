@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Explosive
   - Coin
+  - toCoins
   layers:
   - Default
   - TransparentFX
