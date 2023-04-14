@@ -7,7 +7,7 @@ public class RotateCoin : MonoBehaviour
     Rigidbody rigidbody;
     public float rotateSpeed;
     public Vector3 change;
-    public int moveSpeed;
+    public float moveSpeed;
     private bool down = true;
     private bool up = false;
     private void Start()
@@ -31,11 +31,11 @@ public class RotateCoin : MonoBehaviour
         }
         if(down)
         {
-            change.y -= 0.01f;
+            change.y -= 0.01f * moveSpeed;
         }
         if(up)
         {
-            change.y += 0.01f;
+            change.y += 0.01f * moveSpeed;
         }
 
         rigidbody.MovePosition(change);
