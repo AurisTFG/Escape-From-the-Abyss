@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+//nice
 public class Coins : MonoBehaviour
 {
     public AudioSource collectSound;
