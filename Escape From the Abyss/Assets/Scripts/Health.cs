@@ -1,28 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour
+public class Health : MonoBehaviour
 {
+    // Start is called before the first frame update
     public int maxHealth = 100;
     public int currentHealth;
 
     public HealthBar healthBar;
- 
 
-    private void Start()
+
+    void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             TakeDamage(20);
-            healthBar.SetHealth(currentHealth);
         }
     }
 
@@ -31,16 +31,4 @@ public class PlayerManager : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
-    #region Singleton
-
-    public static PlayerManager instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    #endregion
-
-    public GameObject player;
 }
