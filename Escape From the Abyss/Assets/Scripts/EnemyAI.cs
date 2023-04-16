@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Interfaces;
+using UnityEngine.UI;
 
 
 public class EnemyAI : MonoBehaviour, IDamageable
 {
+    public int maxHealth = 50;
+    private int currentHealth;
+
     public Animator enemyAnim;
 
     public float lookRadius = 10f;
@@ -17,6 +21,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     private AudioSource audioSource;
 
+    public HealthBar healthBar;
 
 
     Transform target;
@@ -29,7 +34,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
         enemyAnim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update()
@@ -56,7 +62,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
-    void OnDrawGizmosSelected ()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
@@ -70,10 +76,14 @@ public class EnemyAI : MonoBehaviour, IDamageable
         audioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
         audioSource.Play();
 
-        GameObject bloodObject = Instantiate(bloodParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation );
+        currentHealth -= damageAmount;
+        healthBar.SetHealth(currentHealth);
+
+        GameObject bloodObject = Instantiate(bloodParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation);
 
         Destroy(bloodObject, 3);
+        if (currentHealth <= 0)
+            gameObject.SetActive(false);
 
-        
     }
 }
