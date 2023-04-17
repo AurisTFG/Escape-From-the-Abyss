@@ -23,7 +23,6 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public HealthBar healthBar;
 
-
     Transform target;
     NavMeshAgent agent;
 
@@ -36,20 +35,29 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+
+        setRigidbodyState(true);
+        setColliderState(false);
+        GetComponent<Animator>().enabled = true;
     }
 
     void Update()
     {
-        enemyAnim.SetBool("walking", false);
-        float distance = Vector3.Distance(target.position, transform.position);
-        if (distance <= lookRadius)
+        if (currentHealth <= 0)
+            die();
+        else
         {
-            enemyAnim.SetBool("walking", true);
-            agent.SetDestination(target.position);
-            if (distance <= agent.stoppingDistance)
+            enemyAnim.SetBool("walking", false);
+            float distance = Vector3.Distance(target.position, transform.position);
+            if (distance <= lookRadius)
             {
-                //Cia pridet reiks, kad priesas pultu zaideja
-                FaceTarget();
+                enemyAnim.SetBool("walking", true);
+                agent.SetDestination(target.position);
+                if (distance <= agent.stoppingDistance)
+                {
+                    //Cia pridet reiks, kad priesas pultu zaideja
+                    FaceTarget();
+                }
             }
         }
     }
@@ -70,20 +78,65 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public void Damage(int damageAmount)
     {
-        Debug.Log("IKIRTAU TAU"); //temp
-        enemyAnim.SetTrigger("hit");
+        if (gameObject != null)
+        {
+            Debug.Log("IKIRTAU TAU"); //temp
+            enemyAnim.SetTrigger("hit");
 
-        audioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
-        audioSource.Play();
+            audioSource.clip = hitSounds[Random.Range(0, hitSounds.Length)];
+            audioSource.Play();
 
-        currentHealth -= damageAmount;
-        healthBar.SetHealth(currentHealth);
+            currentHealth -= damageAmount;
+            healthBar.SetHealth(currentHealth);
 
-        GameObject bloodObject = Instantiate(bloodParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation);
+            GameObject bloodObject = Instantiate(bloodParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation);
 
-        Destroy(bloodObject, 3);
-        if (currentHealth <= 0)
-            gameObject.SetActive(false);
+            Destroy(bloodObject, 3);
+        }
 
     }
+    public void die()
+    {
+
+        GetComponent<Animator>().enabled = false;
+        setRigidbodyState(false);
+        setColliderState(true);
+        if (gameObject != null)
+        {
+            
+            Destroy(gameObject, 3f);
+            FindObjectOfType<AttackArea>().OnTriggerExit(GetComponent<Collider>());
+        }
+
+    }
+
+    void setRigidbodyState(bool state)
+    {
+
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+
+        foreach (Rigidbody rigidbody in rigidbodies)
+        {
+            rigidbody.isKinematic = state;
+        }
+
+        GetComponent<Rigidbody>().isKinematic = !state;
+
+    }
+
+
+    void setColliderState(bool state)
+    {
+
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = state;
+        }
+
+        GetComponent<Collider>().enabled = !state;
+
+    }
+
 }
