@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour, IDataPersistence
 {
     public int maxHealth;
     private int currentHealth;
 
     public HealthBar healthBar;
     public GameController controller;
+
+    public void LoadData(GameData data)
+    {
+        this.currentHealth = data.health;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.health = this.currentHealth;
+    }
 
     private void Start()
     {
@@ -80,4 +90,6 @@ public class PlayerScript : MonoBehaviour
         GetComponent<Collider>().enabled = !state;
 
     }
+
+   
 }

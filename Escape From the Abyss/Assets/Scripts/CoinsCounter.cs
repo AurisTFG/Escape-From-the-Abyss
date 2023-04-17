@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class CoinsCounter : MonoBehaviour
+public class CoinsCounter : MonoBehaviour, IDataPersistence
 {
     public static CoinsCounter instance;
     public int currentCoins = 0;
@@ -14,6 +14,15 @@ public class CoinsCounter : MonoBehaviour
         instance = this;
     }
 
+    public void LoadData(GameData data)
+    {
+        this.currentCoins = data.coinsCount;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.coinsCount = this.currentCoins;
+    }
     // Start is called before the first frame update
     void Start()
     {
