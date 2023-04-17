@@ -13,8 +13,6 @@ public class ShopManager : MonoBehaviour
     public ShopTemplate[] shopPanels;
     public Button[] myPurchaseBtns;
 
-    public KeyCode UIToggleKey = KeyCode.B;
-
     private CoinsCounter _coinsInstance;
 
     private void Awake()
@@ -33,25 +31,13 @@ public class ShopManager : MonoBehaviour
         }
         UpdateUI();
         LoadPanels();
-
-/*        gameObject.SetActive(false);*/
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateUI();
-
-
-/*        if (Input.GetKeyDown(UIToggleKey))
-        {
-            gameObject.SetActive(true);
-            UpdateUI();
-        }
-        else if (Input.GetKeyUp(UIToggleKey))
-        {
-            gameObject.SetActive(false);
-        }*/
     }
 
     public void UpdateUI()
@@ -81,8 +67,9 @@ public class ShopManager : MonoBehaviour
         {
             _coinsInstance.DecreaseCoins(shopItemsSO[buttonNumber].baseCost);
             UpdateUI();
+            
 
-            //unlock item
+            //unlock item here
         }
     }
 
