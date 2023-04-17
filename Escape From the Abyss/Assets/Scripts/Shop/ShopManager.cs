@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager thisInstance;
-    public TMP_Text coinUI;
     public ShopItemSO[] shopItemsSO;
     public GameObject[] shopPanelsSO;
     public ShopTemplate[] shopPanels;
@@ -42,7 +41,6 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        coinUI.text = "Coins: " + _coinsInstance.currentCoins.ToString();
         CheckPurchaserable();
     }
 
