@@ -7,6 +7,7 @@ TagManager:
   - Explosive
   - Coin
   - toCoins
+  - Fist
   layers:
   - Default
   - TransparentFX
