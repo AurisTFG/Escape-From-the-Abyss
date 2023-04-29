@@ -23,6 +23,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     public HealthBar healthBar;
 
+    public GameObject m_RightFist;
+
     Transform target;
     NavMeshAgent agent;
 
@@ -47,8 +49,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
             die();
         else
         {
-            enemyAnim.SetBool("walking", false);
             float distance = Vector3.Distance(target.position, transform.position);
+            enemyAnim.SetBool("walking", false);
             if (distance <= lookRadius)
             {
                 enemyAnim.SetBool("walking", true);
@@ -56,11 +58,24 @@ public class EnemyAI : MonoBehaviour, IDamageable
                 if (distance <= agent.stoppingDistance)
                 {
                     //Cia pridet reiks, kad priesas pultu zaideja
+                    enemyAnim.SetTrigger("Attack");
                     FaceTarget();
                 }
             }
         }
     }
+
+    public void ActivateFist()
+    {
+        m_RightFist.GetComponent<Collider>().enabled = true;
+    }
+
+    public void DeactivateFist()
+    {
+        m_RightFist.GetComponent<Collider>().enabled = false;
+    }
+
+    
 
     void FaceTarget()
     {

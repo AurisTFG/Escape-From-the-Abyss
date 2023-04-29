@@ -47,6 +47,12 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
             die();
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Fist")
+            TakeDamage(20);
+    }
+
     public void die()
     {
 
