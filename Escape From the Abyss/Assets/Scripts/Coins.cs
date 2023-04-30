@@ -51,7 +51,7 @@ public class Coins : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Debug.Log("SUNAIKINOM");
+        //Debug.Log("SUNAIKINOM");
         CoinsCounter.instance.IncreaseCoins(value);
         
     }

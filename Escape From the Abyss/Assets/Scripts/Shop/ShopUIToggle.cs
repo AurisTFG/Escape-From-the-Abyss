@@ -7,6 +7,7 @@ public class ShopUIToggle : MonoBehaviour
     [SerializeField] GameObject shopUI;
     [SerializeField] KeyCode[] toggleShopUIkeys;
 
+    public static bool ShopIsOpened = false;
     // Update is called once per frame
     void Update()
     {
@@ -14,6 +15,7 @@ public class ShopUIToggle : MonoBehaviour
         {
             if (Input.GetKeyDown(toggleShopUIkeys[i]))
             {
+                ShopIsOpened = !ShopIsOpened;
                 shopUI.SetActive(!shopUI.activeSelf);
                 break;
             }
