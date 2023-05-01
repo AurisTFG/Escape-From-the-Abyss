@@ -7,6 +7,7 @@ public class GameData
 {
     public int coinsCount;
     public int health;
+    public int energy;
     public Vector3 playerPosition;
 
     public GameData()
@@ -14,5 +15,6 @@ public class GameData
         this.coinsCount = 0;
         playerPosition = Vector3.zero;
         this.health = 0;
+        this.energy = 0;
     }
 }

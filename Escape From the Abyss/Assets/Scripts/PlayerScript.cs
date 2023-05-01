@@ -6,25 +6,32 @@ using UnityEngine.UIElements;
 public class PlayerScript : MonoBehaviour, IDataPersistence
 {
     public int maxHealth;
+    public int maxEnergy;
     private int currentHealth;
+    private int currentEnergy;
 
     public HealthBar healthBar;
+    public EnergyBar energyBar;
     public GameController controller;
 
     public void LoadData(GameData data)
     {
         this.currentHealth = data.health;
+        this.currentEnergy = data.energy;
     }
 
     public void SaveData(ref GameData data)
     {
         data.health = this.currentHealth;
+        data.energy = this.currentEnergy;
     }
 
     private void Start()
     {
         currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
         healthBar.SetMaxHealth(maxHealth);
+        energyBar.SetMaxEnergy(maxEnergy);
         setRigidbodyState(true);
         setColliderState(false);
         GetComponent<Animator>().enabled = true;
@@ -34,11 +41,17 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            TakeDamage(20);
-            healthBar.SetHealth(currentHealth);
+            TakeEnergy(20);
+            energyBar.SetEnergy(currentEnergy);
         }
     }
-
+    void TakeEnergy(int damage)
+    {
+        currentEnergy -= damage;
+        energyBar.SetEnergy(currentEnergy);
+        //if (currentEber <= 0)
+           // die();
+    }
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
