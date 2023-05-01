@@ -18,17 +18,5 @@ public class Health : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            TakeDamage(20);
-        }
-    }
 
-    void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
-    }
 }
