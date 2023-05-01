@@ -28,6 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     Transform target;
     NavMeshAgent agent;
 
+    public bool dead = false;
     void Start()
     {
         target = PlayerManager.instance.player.transform;
@@ -43,10 +44,10 @@ public class EnemyAI : MonoBehaviour, IDamageable
         GetComponent<Animator>().enabled = true;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (currentHealth <= 0)
-            die();
+                die();
         else
         {
             float distance = Vector3.Distance(target.position, transform.position);
@@ -75,7 +76,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         m_RightFist.GetComponent<Collider>().enabled = false;
     }
 
-    
+
 
     void FaceTarget()
     {
@@ -112,18 +113,32 @@ public class EnemyAI : MonoBehaviour, IDamageable
     }
     public void die()
     {
-
-        GetComponent<Animator>().enabled = false;
-        setRigidbodyState(false);
-        setColliderState(true);
-        if (gameObject != null)
+        if (!dead)
         {
-            
+            GetComponent<Animator>().enabled = false;
+            setRigidbodyState(false);
+            setColliderState(true);
+
+            // Get reference to LootBag component
+            LootBag lootBag = GetComponent<LootBag>();
+
+            if (lootBag != null)
+            {
+                Debug.Log("Kreipiames");
+                // Call SpawnCoins() method on LootBag component to spawn coins
+                lootBag.SpawnCoins(transform.position);
+            }
+
             Destroy(gameObject, 3f);
             FindObjectOfType<AttackArea>().OnTriggerExit(GetComponent<Collider>());
+            dead = true;
         }
-
+        else
+            return;
     }
+
+
+
 
     void setRigidbodyState(bool state)
     {
