@@ -11,6 +11,9 @@ public class EnemyAI : MonoBehaviour, IDamageable
     public int maxHealth = 50;
     private int currentHealth;
 
+    public float fleeFor;
+    private float elapsedTime;
+
     public Animator enemyAnim;
 
     public float lookRadius = 10f;
@@ -31,6 +34,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     public bool dead = false;
     void Start()
     {
+        elapsedTime = fleeFor;
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
         enemyAnim = GetComponent<Animator>();
@@ -46,24 +50,45 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     void FixedUpdate()
     {
+        Debug.Log("Laikas:" + elapsedTime);
         if (currentHealth <= 0)
                 die();
+        
         else
         {
-            float distance = Vector3.Distance(target.position, transform.position);
-            enemyAnim.SetBool("walking", false);
-            if (distance <= lookRadius)
+            if (elapsedTime < fleeFor)
             {
-                enemyAnim.SetBool("walking", true);
-                agent.SetDestination(target.position);
-                if (distance <= agent.stoppingDistance)
-                {
-                    //Cia pridet reiks, kad priesas pultu zaideja
-                    enemyAnim.SetTrigger("Attack");
-                    FaceTarget();
-                }
+                transform.Translate(Vector3.down * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+
+            }
+            else
+            {
+                getCloseAndAttack();
             }
         }
+    }
+
+    void getCloseAndAttack()
+    {
+        float distance = Vector3.Distance(target.position, transform.position);
+        enemyAnim.SetBool("walking", false);
+        if (distance <= lookRadius)
+        {
+            enemyAnim.SetBool("walking", true);
+            agent.SetDestination(target.position);
+            if (distance <= agent.stoppingDistance)
+            {
+                //Cia pridet reiks, kad priesas pultu zaideja
+                enemyAnim.SetTrigger("Attack");
+                FaceTarget();
+            }
+        }
+    }
+    public void flee()
+    {
+        enemyAnim.SetBool("walking", true);
+        agent.SetDestination(-target.position);
     }
 
     public void ActivateFist()
@@ -168,5 +193,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
         GetComponent<Collider>().enabled = !state;
 
     }
-
+    public void ResetTime()
+    {
+        elapsedTime = 0;
+    }
 }

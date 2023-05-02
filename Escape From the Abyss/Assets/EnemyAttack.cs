@@ -8,6 +8,7 @@ public class EnemyAttack : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         FindObjectOfType<EnemyAI>().ActivateFist();
+        FindObjectOfType<EnemyAI>().ResetTime();
     }
 
     ////OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,6 +21,7 @@ public class EnemyAttack : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         FindObjectOfType<EnemyAI>().DeactivateFist();
+        FindObjectOfType<EnemyAI>().flee();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
