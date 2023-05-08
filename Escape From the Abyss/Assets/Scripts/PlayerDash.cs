@@ -9,6 +9,11 @@ public class PlayerDash : MonoBehaviour
     PlayerScript data;
     public float dashSpeed;
     public float dashTime;
+
+    public GameObject dashParticles;
+
+    AudioSource audioSource;
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +21,8 @@ public class PlayerDash : MonoBehaviour
         moveScript = GetComponent<CharacterMovement>();
         data = GetComponent<PlayerScript>();
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponents<AudioSource>()[2];
+
     }
 
     // Update is called once per frame
@@ -31,6 +38,13 @@ public class PlayerDash : MonoBehaviour
             {
                 Debug.Log("DASHINAM!");
                 data.TakeEnergy(50);
+
+                audioSource.Play();
+
+                GameObject dashObject = Instantiate(dashParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation);
+
+                Destroy(dashObject, 1.5f);
+
                 StartCoroutine(Dash());
             }
             
