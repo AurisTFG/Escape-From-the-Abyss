@@ -10,6 +10,10 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     private int currentHealth;
     private int currentEnergy;
 
+    public float elapsedTime;
+    public float timeForHealth;
+    public float timeForEnergy;
+
     public HealthBar healthBar;
     public EnergyBar energyBar;
     public GameController controller;
@@ -19,7 +23,10 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         this.currentHealth = data.health;
         this.currentEnergy = data.energy;
     }
-
+    public int GetEnergy()
+    {
+        return currentEnergy;
+    }
     public void SaveData(ref GameData data)
     {
         data.health = this.currentHealth;
@@ -36,21 +43,21 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         setColliderState(false);
         GetComponent<Animator>().enabled = true;
     }
-
-    private void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        elapsedTime += Time.deltaTime;
+        if(elapsedTime >= 5)
         {
-            TakeEnergy(20);
-            energyBar.SetEnergy(currentEnergy);
+            addEnergy(15);
+            addHealth(5);
+            ResetTime();
         }
+       
     }
-    void TakeEnergy(int damage)
+    public void TakeEnergy(int damage)
     {
         currentEnergy -= damage;
         energyBar.SetEnergy(currentEnergy);
-        //if (currentEber <= 0)
-           // die();
     }
     void TakeDamage(int damage)
     {
@@ -59,7 +66,26 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         if (currentHealth <= 0)
             die();
     }
-
+    void addEnergy(int ammount)
+    {
+        if(currentEnergy + ammount >= maxEnergy)
+        {
+            currentEnergy = maxEnergy;
+        }
+        else
+        currentEnergy += ammount;
+        energyBar.SetEnergy(currentEnergy);
+    }
+    void addHealth (int ammount)
+    {
+        if(currentHealth + ammount >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        currentHealth += ammount;
+        healthBar.SetHealth(currentHealth);
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Fist")
@@ -109,6 +135,9 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         GetComponent<Collider>().enabled = !state;
 
     }
+    public void ResetTime()
+    {
+        elapsedTime = 0;
+    }
 
-   
 }
