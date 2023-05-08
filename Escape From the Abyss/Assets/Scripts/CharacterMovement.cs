@@ -7,6 +7,9 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
     float[] pitchRanges = new float[]{ 0.95f, 1, 1.05f };
 
     private AudioSource audioSource;
+   
+
+ 
 
     public float walkingSpeed;
     private Vector3 walkingChange;

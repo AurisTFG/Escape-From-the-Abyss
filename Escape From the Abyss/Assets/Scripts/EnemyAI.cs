@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
 
     void FixedUpdate()
     {
-        Debug.Log("Laikas:" + elapsedTime);
+       // Debug.Log("Laikas:" + elapsedTime);
         if (currentHealth <= 0)
                 die();
         
