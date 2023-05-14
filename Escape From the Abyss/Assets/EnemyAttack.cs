@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EnemyAttack : StateMachineBehaviour
 {
+
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        FindObjectOfType<EnemyAI>().ActivateFist();
-        FindObjectOfType<EnemyAI>().ResetTime();
+        animator.gameObject.GetComponent<EnemyAI>().ActivateFist();
+        animator.gameObject.GetComponent<EnemyAI>().ResetTime();
     }
 
     ////OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,8 +21,8 @@ public class EnemyAttack : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        FindObjectOfType<EnemyAI>().DeactivateFist();
-        FindObjectOfType<EnemyAI>().flee();
+        animator.gameObject.GetComponent<EnemyAI>().DeactivateFist();
+        animator.gameObject.GetComponent<EnemyAI>().flee();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
