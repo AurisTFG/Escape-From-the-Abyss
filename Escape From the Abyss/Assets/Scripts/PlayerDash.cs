@@ -11,11 +11,15 @@ public class PlayerDash : MonoBehaviour
     public float dashTime;
 
     public GameObject dashParticles;
-
+    public static PlayerDash instancee;
     AudioSource audioSource;
 
     Rigidbody rb;
     // Start is called before the first frame update
+    public void Awake()
+    {
+        instancee = this;
+    }
     void Start()
     {
         moveScript = GetComponent<CharacterMovement>();
