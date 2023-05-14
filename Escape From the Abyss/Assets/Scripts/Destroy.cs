@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
-
+    public AudioSource explodeSound;
     public float cubeSize = 0.2f;
     public int cubesInRow = 5;
-
+    public HealthBar healthBar;
     float cubesPivotDistance;
     Vector3 cubesPivot;
 
@@ -17,22 +17,15 @@ public class Destroy : MonoBehaviour
     public float explosionRadius = 4f;
     public float explosionUpward = 0.4f;
 
-    // Use this for initialization
     void Start()
     {
-
-
-        //calculate pivot distance
         cubesPivotDistance = cubeSize * cubesInRow / 2;
-        //use this value to create pivot vector)
         cubesPivot = new Vector3(cubesPivotDistance, cubesPivotDistance, cubesPivotDistance);
-
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -42,22 +35,33 @@ public class Destroy : MonoBehaviour
             Debug.Log("Touched player");
             explode();
         }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Touched enemy");
+            explode();
+        }
     }
 
     public void explode()
     {
-
-        if(particleOnDestroy)
+        // Play the explosion sound...
+        if (explodeSound != null)
+        {
+            //explodeSound.enabled = true; // Enable the AudioSource
+            Debug.Log("GAAARSOO!");
+            explodeSound.Play();
+        }
+        if (particleOnDestroy)
         {
             GameObject explosion = Instantiate(particleOnDestroy, transform.position, transform.rotation);
-
+           
             Destroy(explosion, 3);
         }
 
-        //make object disappear
-        gameObject.SetActive(false);
 
-        //loop 3 times to create 5x5x5 pieces in x,y,z coordinates
+
+        gameObject.SetActive(false);
+      
         for (int x = 0; x < cubesInRow; x++)
         {
             for (int y = 0; y < cubesInRow; y++)
@@ -68,40 +72,58 @@ public class Destroy : MonoBehaviour
                 }
             }
         }
-
-        //get explosion position
+       
         Vector3 explosionPos = transform.position;
-        //get colliders in that position and radius
         Collider[] colliders = Physics.OverlapSphere(explosionPos, explosionRadius);
-        //add explosion force to all colliders in that overlap sphere
         foreach (Collider hit in colliders)
         {
-            //get rigidbody from collider object
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                //add explosion force to this body with given parameters
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpward);
+                if (rb.gameObject.name == "Player")
+                {
+                    if(PlayerScript.instance != null)
+                    {
+                        PlayerScript.instance.TakeDamage(20);
+                    }
+                   
+                }                    
+                if (rb.gameObject.tag == "Enemy")
+                {
+
+                    EnemyAI enemy = hit.gameObject.GetComponent<EnemyAI>();
+                    if(enemy != null)
+                    {
+                        enemy.Damage(20);
+                    }
+                }
+                if (rb.gameObject.tag == "Explosive")
+                {
+                    Debug.Log("SALIA SPROGMUO");
+                    Destroy explosive = hit.gameObject.GetComponent<Destroy>();
+                    if (explosive != null)
+                    {
+                        explosive.StartCoroutine(explosive.ExplodeAfterDelay());
+                    }
+                }
+
             }
         }
+      
+    }
+    private IEnumerator ExplodeAfterDelay()
+    {
+        yield return new WaitForSeconds(1f); // Delay before exploding
 
+        explode();
     }
 
     void createPiece(int x, int y, int z)
     {
-
-        //create piece
-        GameObject piece;
-        piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        
-
-        //set piece position and scale
+       
+        GameObject piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
         piece.transform.position = transform.position + new Vector3(cubeSize * x, cubeSize * y, cubeSize * z) - cubesPivot;
         piece.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
-
-        //add rigidbody and set mass
-        piece.AddComponent<Rigidbody>();
-        piece.GetComponent<Rigidbody>().mass = cubeSize;
+        piece.AddComponent<Rigidbody>().mass = cubeSize;
     }
-
 }
