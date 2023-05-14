@@ -13,11 +13,15 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     public float elapsedTime;
     public float timeForHealth;
     public float timeForEnergy;
-
+    public static PlayerScript instance;
     public HealthBar healthBar;
     public EnergyBar energyBar;
     public GameController controller;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     public void LoadData(GameData data)
     {
         this.currentHealth = data.health;
@@ -59,7 +63,7 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         currentEnergy -= damage;
         energyBar.SetEnergy(currentEnergy);
     }
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
