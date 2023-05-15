@@ -7,7 +7,7 @@ public class DataPersistenceManager : MonoBehaviour
 {
     [Header("File storage config")]
     [SerializeField] private string fileName;
-    
+
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
@@ -28,6 +28,12 @@ public class DataPersistenceManager : MonoBehaviour
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        gameData = new GameData();
+        //LoadGame();
+    }
+
+    public void LoadingGame()
+    {
         LoadGame();
     }
 
@@ -59,10 +65,10 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save(gameData);
     }
 
-    private void OnApplicationQuit()
-    {
-        SaveGame();
-    }
+    //private void OnApplicationQuit()
+    //{
+    //    SaveGame();
+    //}
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {

@@ -17,6 +17,7 @@ public class CoinsCounter : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.currentCoins = data.coinsCount;
+        coinDisplay.text = currentCoins.ToString();
     }
 
     public void SaveData(ref GameData data)
