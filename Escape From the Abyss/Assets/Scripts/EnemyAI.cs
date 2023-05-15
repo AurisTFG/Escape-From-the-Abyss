@@ -130,6 +130,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
             currentHealth -= damageAmount;
             healthBar.SetHealth(currentHealth);
 
+            //GameController.IncreaseKillCount();
+
             GameObject bloodObject = Instantiate(bloodParticles, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Random.rotation);
 
             Destroy(bloodObject, 3);
@@ -144,6 +146,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
             setRigidbodyState(false);
             setColliderState(true);
 
+            GameController.instance.IncreaseKillCount();
             // Get reference to LootBag component
             LootBag lootBag = GetComponent<LootBag>();
 
@@ -157,6 +160,8 @@ public class EnemyAI : MonoBehaviour, IDamageable
             Destroy(gameObject, 3f);
             FindObjectOfType<AttackArea>().OnTriggerExit(GetComponent<Collider>());
             dead = true;
+
+            
         }
         else
             return;

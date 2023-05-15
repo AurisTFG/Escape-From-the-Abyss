@@ -18,6 +18,9 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     public EnergyBar energyBar;
     public GameController controller;
 
+    public Camera mainCamera;
+    public Camera deathCamera;
+
     private void Awake()
     {
         instance = this;
@@ -70,7 +73,7 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
         if (currentHealth <= 0)
             die();
     }
-    void addEnergy(int ammount)
+    public void addEnergy(int ammount)
     {
         if(currentEnergy + ammount >= maxEnergy)
         {
@@ -98,7 +101,14 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
 
     public void die()
     {
+        mainCamera.enabled = false;
+        deathCamera.gameObject.SetActive(true);
 
+        SoundManager.instance.StopMusic();
+
+        deathCamera.backgroundColor = Color.gray;
+        deathCamera.GetComponent<AudioSource>().Play();
+        GetComponents<AudioSource>()[0].Stop();
         GetComponent<Animator>().enabled = false;
         setRigidbodyState(false);
         setColliderState(true);
@@ -107,6 +117,9 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
             gameObject.GetComponent<CharacterMovement>().enabled = false;
             controller.GameOver();
         }
+
+        Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
     }
 

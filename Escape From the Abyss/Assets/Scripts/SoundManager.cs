@@ -6,6 +6,8 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
+    
+
     public AudioClip[] soundTracks;
 
     private AudioSource audioSource;
@@ -23,6 +25,11 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = soundTracks[Random.Range(0, soundTracks.Length)];
         audioSource.Play();
     }
+    public void StopMusic()
+    {
+        audioSource.Stop();
+    }
+
 
 
 
