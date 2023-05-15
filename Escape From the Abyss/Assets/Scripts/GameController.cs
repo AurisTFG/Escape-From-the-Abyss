@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     private AudioSource audioSource;
 
     public GameObject[] enemySpawns;
-
+    public GameObject canvas;
     public GameObject thunderSpawn;
 
     public int killCount = 0;
@@ -52,9 +52,15 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void DisableCanvas()
+    {
+        canvas.gameObject.SetActive(false);
+    }
+
     public void GameOver()
     {
         GameOverScreen.Setup();
+
     }
 
     public void IncreaseKillCount()

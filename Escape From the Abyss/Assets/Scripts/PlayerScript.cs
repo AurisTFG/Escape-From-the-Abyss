@@ -111,6 +111,7 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
 
         SoundManager.instance.StopMusic();
 
+        GameController.instance.DisableCanvas();
         deathCamera.backgroundColor = Color.gray;
         deathCamera.GetComponent<AudioSource>().Play();
         GetComponents<AudioSource>()[0].Stop();
