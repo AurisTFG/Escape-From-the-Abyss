@@ -9,8 +9,6 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
     private AudioSource audioSource;
    
 
- 
-
     public float walkingSpeed;
     private Vector3 walkingChange;
     private Vector3 forward, right;
