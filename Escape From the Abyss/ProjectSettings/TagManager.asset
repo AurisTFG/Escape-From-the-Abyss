@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - toCoins
   - Fist
+  - Enemy
   layers:
   - Default
   - TransparentFX
