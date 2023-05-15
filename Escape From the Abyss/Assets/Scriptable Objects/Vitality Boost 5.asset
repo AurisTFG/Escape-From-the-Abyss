@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2764bfcee9279e54d9a5a6ec7d4d4f06, type: 3}
-  m_Name: Hat
+  m_Name: Vitality Boost 5
   m_EditorClassIdentifier: 
-  title: Hat
-  description: A nice hat
-  baseCost: 5
+  title: Time Bender
+  description: Become a master of time manipulation with the Time Bender powerup.
+    Manipulate the flow of time to decrease your energy regeneration interval, allowing
+    you to recharge your energy rapidly and maintain an unyielding offensive.
+  baseCost: 20
