@@ -65,9 +65,32 @@ public class ShopManager : MonoBehaviour
         {
             _coinsInstance.DecreaseCoins(shopItemsSO[buttonNumber].baseCost);
             UpdateUI();
-            
 
-            //unlock item here
+            switch (buttonNumber)
+            {
+                case 0:  // max energy increase
+
+					break;
+                case 1: // max health increase
+
+					break;
+                case 2: // health regen amount increase
+
+					break;
+                case 3: // health regen frequency increase
+
+					break;
+                case 4: // energy regen amount increase
+
+					break;
+                case 5: // energy regen frequency increase
+
+					break;
+
+                default:
+                    Debug.LogError("WRONG BUTTON NUMBER");
+                    break;
+            }
         }
     }
 
