@@ -16,11 +16,19 @@ public class GameOverScreen : MonoBehaviour
     public void ButtonRestart()
     {
         SceneManager.LoadScene("SampleScene");
+
+        // Reset back to normal speed
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 
     public void ButtonMainMenu()
     {
         SceneManager.LoadScene("Menu");
+
+        // Reset back to normal speed
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
     }
 
 }

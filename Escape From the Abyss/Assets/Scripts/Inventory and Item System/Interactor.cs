@@ -9,6 +9,8 @@ namespace XEntity.InventoryItemSystem
         //Reference to the main game viewing camera.
         [SerializeField] private Camera mainCamera;
 
+        public Camera deathCamera;
+
         //Reference to the item container thats dedicated to this interactor.
         public ItemContainer inventory;
 
