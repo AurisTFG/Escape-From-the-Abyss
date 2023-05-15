@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour, IDataPersistence
+public class CharacterMovement : MonoBehaviour
 {
     public Animator playerAnim;
     private Rigidbody myRigidbody;
@@ -109,15 +109,5 @@ public class CharacterMovement : MonoBehaviour, IDataPersistence
             walkingChange.x = 1;
         }
 
-    }
-
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.playerPosition = this.transform.position;
     }
 }

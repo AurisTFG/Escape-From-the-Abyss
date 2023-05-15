@@ -29,15 +29,20 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     {
         this.currentHealth = data.health;
         this.currentEnergy = data.energy;
+        healthBar.SetHealth(currentHealth);
+        energyBar.SetEnergy(currentEnergy);
+        this.transform.position = data.playerPosition;
     }
     public int GetEnergy()
     {
         return currentEnergy;
     }
+
     public void SaveData(ref GameData data)
     {
         data.health = this.currentHealth;
         data.energy = this.currentEnergy;
+        data.playerPosition = this.transform.position;
     }
 
     private void Start()

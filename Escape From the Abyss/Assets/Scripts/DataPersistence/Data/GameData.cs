@@ -15,6 +15,6 @@ public class GameData
         this.coinsCount = 0;
         playerPosition = Vector3.zero;
         this.health = 0;
-        this.energy = 0;
+        energy = 0;
     }
 }
