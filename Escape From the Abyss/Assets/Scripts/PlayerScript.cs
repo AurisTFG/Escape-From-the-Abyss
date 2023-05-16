@@ -102,6 +102,10 @@ public class PlayerScript : MonoBehaviour, IDataPersistence
     {
         if (other.gameObject.tag == "Fist")
             TakeDamage(20);
+        if (other.gameObject.tag == "Spike")
+            TakeDamage(15);
+        if (other.gameObject.tag == "Horn")
+            TakeDamage(40);
     }
 
     public void die()
