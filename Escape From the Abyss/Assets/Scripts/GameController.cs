@@ -15,11 +15,12 @@ public class GameController : MonoBehaviour
 
     public GameObject enemyStageOne;
     public GameObject enemyStageTwo;
-    public GameObject enemyStageThree;
+    public GameObject boss;
 
     private AudioSource audioSource;
 
     public GameObject[] enemySpawns;
+    public GameObject bossSpawn;
     public GameObject canvas;
     public GameObject thunderSpawn;
 
@@ -72,7 +73,7 @@ public class GameController : MonoBehaviour
         if (killCount == 12)
             InitiateStageThree();
 
-        if (killCount == 21)
+        if (killCount == 19)
             InitiateFinalStage();
 
     }
@@ -133,7 +134,7 @@ public class GameController : MonoBehaviour
         Destroy(thunderObject, 3f);
 
 
-        // Boss spawn
+        boss.gameObject.SetActive(true);
     }
 
 
